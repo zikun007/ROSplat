@@ -83,6 +83,17 @@ build compiles its SPIR-V shader set. ROSplat finds
 `build-native/librosplat_spirula.so` automatically. Override the path with
 `ROSPLAT_SPIRULA_LIBRARY` when installing elsewhere.
 
+### macOS local development
+
+This repository also carries reproducible development manifests for Apple
+Silicon:
+
+- `pyproject.toml` + `uv.lock` for the Python/PLY environment (`uv sync --frozen`)
+- `pixi.toml` + `pixi.lock` for ROS 2 Jazzy, colcon, and the GUI (`pixi install`)
+
+See [docs/01-macos-dev.md](docs/01-macos-dev.md) for the full setup, the
+`gaussian_interface` build command, and the ROS 2 streaming test.
+
 ### Third-party licensing
 
 Spirula Studio stays pinned and unmodified in `external/spirula-studio`, with

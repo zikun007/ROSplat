@@ -14,7 +14,10 @@ from imgui_bundle import (
 # Local modules
 from rosplat.core import util
 from rosplat.render.renderer import RenderOutputMode
-from rosplat.ros import ROSNodeManager
+try:
+    from rosplat.ros import ROSNodeManager
+except ImportError:  # macOS dev mode: no rclpy / gaussian_interface
+    ROSNodeManager = None
 
 
 # === Global State ===
@@ -22,7 +25,29 @@ world_settings = None
 frame_queue = queue.Queue(maxsize=10)
 latest_frame = [None]  # mutable container
 imu_queue = queue.Queue(maxsize=1)
-ros_node_manager = ROSNodeManager()
+
+
+class _NullROSNodeManager:
+    """Stand-in used when ROS 2 is unavailable (PLY-only macOS dev mode)."""
+
+    class _Graph:
+        @staticmethod
+        def get_topic_names_and_types():
+            return []
+
+    _graph = _Graph()
+
+    def add_listener(self, topic_name):
+        util.logger.warning("ROS is unavailable; cannot subscribe to %s", topic_name)
+
+    def kill_listener(self, topic_name):
+        pass
+
+    def shutdown(self):
+        pass
+
+
+ros_node_manager = ROSNodeManager() if ROSNodeManager else _NullROSNodeManager()
 
 def shutdown_ros() -> None:
     """Stop ROS listeners and their executor before rclpy is shut down."""

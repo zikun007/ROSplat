@@ -43,9 +43,13 @@ def _library_candidates() -> list[Path]:
     candidates.extend(
         [
             project_root / "build-native" / "librosplat_spirula.so",
+            project_root / "build-native" / "librosplat_spirula.dylib",
             project_root / "build" / "native" / "librosplat_spirula.so",
+            project_root / "build" / "native" / "librosplat_spirula.dylib",
             Path("/opt/rosplat-native/lib/rosplat/librosplat_spirula.so"),
+            Path("/opt/rosplat-native/lib/rosplat/librosplat_spirula.dylib"),
             Path("/usr/local/lib/rosplat/librosplat_spirula.so"),
+            Path("/usr/local/lib/rosplat/librosplat_spirula.dylib"),
         ]
     )
     return candidates

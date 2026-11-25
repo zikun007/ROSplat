@@ -1,0 +1,19 @@
+[project]
+name = "rosplat"
+version = "0.1.0"
+description = "ROS 2 online 3D Gaussian Splatting visualizer"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "numpy==2.5.2",
+    "imgui-bundle==1.93.0",
+    "wgpu==0.32.0",
+    "rendercanvas==2.7.2",
+    "glfw==2.10.2",
+    "loguru==0.7.3",
+    "pillow==12.3.0",
+    "plyfile==1.1.5",
+    "PyGLM==2.8.3",
+]
+
+[tool.uv]
+package = false

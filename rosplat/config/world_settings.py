@@ -7,7 +7,14 @@ from typing import Optional
 
 import numpy as np
 
-from gaussian_interface.msg import GaussianArray, SingleGaussian
+try:
+    from gaussian_interface.msg import GaussianArray, SingleGaussian
+except ImportError:  # macOS dev mode: messages not built
+    class SingleGaussian:  # type: ignore[no-redef]
+        pass
+
+    class GaussianArray:  # type: ignore[no-redef]
+        pass
 from rosplat.core import gaussian_representation, util
 from rosplat.core.gaussian_representation import GaussianData
 from rosplat.render.camera import Camera

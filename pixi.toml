@@ -1,0 +1,34 @@
+[workspace]
+name = "rosplat"
+channels = [
+  "https://art-internal.hobot.cc/artifactory/api/conda/conda-proxy-custom_channels/conda-forge",
+  "https://prefix.dev/robostack-jazzy",
+]
+platforms = ["osx-arm64"]
+
+[dependencies]
+ros-jazzy-ros-base = "*"
+ros-jazzy-rclpy = "*"
+ros-jazzy-sensor-msgs = "*"
+ros-jazzy-geometry-msgs = "*"
+ros-jazzy-rosidl-default-generators = "*"
+ros-jazzy-rosidl-default-runtime = "*"
+ros-jazzy-rmw-cyclonedds-cpp = "*"
+ros-jazzy-ros2cli = "*"
+ros-jazzy-ros2topic = "*"
+ros-jazzy-ros2pkg = "*"
+ros-jazzy-ros2run = "*"
+colcon-common-extensions = "*"
+cmake = "*"
+ninja = "*"
+cxx-compiler = "*"
+imgui-bundle = "1.93.0.*"
+pyglfw = "*"
+pyglm = "*"
+pillow = "*"
+
+[pypi-dependencies]
+wgpu = "==0.32.0"
+rendercanvas = "==2.7.2"
+plyfile = "==1.1.5"
+loguru = "==0.7.3"

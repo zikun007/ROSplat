@@ -1,43 +1,56 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# ROS 
+# ---- Build / ROS / colcon ----
 build/
 install/
 log/
+build-*/
+install-*/
 
-# Python
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
 .venv/
 venv/
-__pycache__/
+.pixi/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ---- Native / compiled ----
+*.o
+*.obj
+*.lo
+*.slo
+*.a
+*.la
+*.lai
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+*.mod
+*.smod
+*.pch
+*.gch
+*.d
+
+# ---- Runtime / generated ----
+imgui.ini
 data/
+
+# ---- OS / editor ----
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# ---- Local overrides ----
+# 全局 gitignore 含过宽的 `core` 规则，显式保留源码目录
+!rosplat/core/
+!rosplat/core/**

@@ -1,5 +1,5 @@
 numpy==2.5.2
-imgui-bundle==1.92.900
+imgui-bundle==1.93.0
 wgpu==0.32.0
 rendercanvas==2.7.2
 glfw==2.10.2

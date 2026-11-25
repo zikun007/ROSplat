@@ -1,9 +1,16 @@
 import os
+import sys
 
-os.environ.setdefault("WGPU_BACKEND_TYPE", "Vulkan")
+# The upstream project targets Vulkan everywhere. On macOS the wgpu wheel
+# ships Metal only, while Spirula itself still renders through MoltenVK.
+if "WGPU_BACKEND_TYPE" not in os.environ:
+    os.environ["WGPU_BACKEND_TYPE"] = "Metal" if sys.platform == "darwin" else "Vulkan"
 
 from imgui_bundle import imgui
-import rclpy
+try:
+    import rclpy
+except ImportError:  # macOS dev mode: no ROS 2 installation
+    rclpy = None
 import wgpu
 from rendercanvas.auto import RenderCanvas, loop
 
@@ -57,7 +64,7 @@ class App:
         if self.imgui_renderer is not None:
             self.imgui_renderer.shutdown()
         shutdown_ros()
-        if rclpy.ok():
+        if rclpy is not None and rclpy.ok():
             rclpy.shutdown()
 
     def run(self) -> None:
@@ -65,7 +72,14 @@ class App:
         adapter = wgpu.gpu.request_adapter_sync(power_preference="high-performance")
         if adapter is None:
             raise RuntimeError("No WebGPU adapter was available")
-        if adapter.info["backend_type"].lower() != "vulkan":
+        backend = adapter.info["backend_type"].lower()
+        # macOS dev mode: Spirula uses MoltenVK for rendering, while wgpu-py's
+        # bundled native library exposes Metal only.  They do not share GPU
+        # resources; the native renderer hands back an RGBA8 buffer.
+        allowed_backends = {"vulkan"}
+        if sys.platform == "darwin":
+            allowed_backends.add("metal")
+        if backend not in allowed_backends:
             raise RuntimeError(
                 "ROSplat requires wgpu's Vulkan backend, got "
                 f"{adapter.info['backend_type']}"
@@ -89,7 +103,7 @@ class App:
 
 
 def main() -> None:
-    if not rclpy.ok():
+    if rclpy is not None and not rclpy.ok():
         rclpy.init()
     App().run()
 

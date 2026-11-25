@@ -83,7 +83,7 @@ RUN cmake -S /tmp/rosplat-native -B /tmp/rosplat-native-build -G Ninja \
 
 ENV ROSPLAT_SPIRULA_LIBRARY=/opt/rosplat-native/lib/rosplat/librosplat_spirula.so
 
-COPY requirements.txt /tmp/requirements.txt
+COPY docker/requirements.txt /tmp/requirements.txt
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     python -m pip install -r /tmp/requirements.txt \
